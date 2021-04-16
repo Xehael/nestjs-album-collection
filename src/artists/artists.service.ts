@@ -5,6 +5,7 @@ import { v1 as uuid } from 'uuid';
 import { ArtistRepository } from './artist.repository';
 import { createArtistDto } from './dto/create-artist.dto';
 import { stringify } from 'node:querystring';
+import { UpdateArtistDto } from './dto/update-artist.dto';
 
 @Injectable()
 export class ArtistsService {
@@ -42,5 +43,23 @@ export class ArtistsService {
             throw new Error("Artist not inserted");
         }
         return insert;
+    }
+
+
+    async updateArtistByName(updateArtistDto : UpdateArtistDto): Promise<Artist>{
+        const update : Artist = await this.getArtistByName(updateArtistDto.name)
+
+        update.name = updateArtistDto.name;
+        update.isBand = updateArtistDto.isBand;
+        await update.save()
+        return update;
+    }
+
+
+    async deleteArtistById(id: number): Promise<void> {
+        const taskdeleted = await this.artistRepository.delete(id);
+        if(taskdeleted.affected === 0){
+            throw new NotFoundException(`Artist ${id} not found`)
+        }
     }
 }
