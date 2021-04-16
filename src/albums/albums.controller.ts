@@ -3,6 +3,7 @@ import { Controller, UsePipes, Get, Post, Param, ParseIntPipe} from '@nestjs/com
 import { Album } from './album.entity';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
+import { UpdateAlbumDto } from './dto/update-album.dto';
 
 @Controller('albums')
 export class AlbumsController {
@@ -23,19 +24,19 @@ export class AlbumsController {
     @Post('addAlbum')
     @UsePipes(ValidationPipe)
     addAlbum(@Body() createAlbumDto : CreateAlbumDto ){
-      console.log("ADD TASK")
+    console.log("ADD TASK")
      if(createAlbumDto)
      {
       return this.albumsService.addAlbum(createAlbumDto);
      }
     }
 
-    // @Patch('/updateAlbums')
-    // @UsePipes(ValidationPipe)
-    // updateStatusById(@Body() updateTaskStatusDto : UpdateStatusDto): Promise<Task>{
-    //     console.log("UPDATE TASK STATUS")
-    //     return this.tasksService.updateStatusById(updateTaskStatusDto);
-    // }
+    @Patch('/updateAlbums')
+    @UsePipes(ValidationPipe)
+    updateAlbumById(@Body() updateAlbumDto : UpdateAlbumDto): Promise<Album>{
+        console.log("UPDATE TASK STATUS")
+        return this.albumsService.updateAlbumById(updateAlbumDto);
+    }
 
     @Delete('/:id')
     deleteAlbumById(@Param('id') id: number) : Promise<void> {

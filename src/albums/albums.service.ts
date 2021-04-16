@@ -4,6 +4,8 @@ import { Album } from './album.entity';
 import { AlbumRepository } from './album.repository';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { v1 as uuid } from 'uuid';
+import { UpdateAlbumDto } from './dto/update-album.dto';
+import { timer } from 'rxjs';
 
 
 @Injectable()
@@ -45,13 +47,15 @@ export class AlbumsService {
          return insert;
     } 
 
-    // async updateStatusById(updateStatusDto : UpdateStatusDto): Promise<Task>{
-    //     const update : Task = await this.getTaskById(updateStatusDto.id)
+    async updateAlbumById(updateAlbumDto : UpdateAlbumDto): Promise<Album>{
+        const update : Album = await this.getAlbumById(updateAlbumDto.id)
 
-    //     update.status = updateStatusDto.status;
-    //     await update.save()
-    //     return update;
-    // }
+        update.title = updateAlbumDto.title;
+        update.year = updateAlbumDto.year;
+        update.cover = updateAlbumDto.cover;
+        await update.save()
+        return update;
+    }
 
     async deleteAlbumById(id: number): Promise<void> {
         const taskdeleted = await this.albumRepository.delete(id);
