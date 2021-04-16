@@ -19,7 +19,7 @@ export class AlbumsService {
     async getAllAlbums(): Promise<Album[]> {
         const albums = await this.albumRepository.find();
         if(!albums){
-            throw new NotFoundException("Task not found")
+            throw new NotFoundException("Album not found")
         }
         return albums;
     }
@@ -27,7 +27,7 @@ export class AlbumsService {
     async getAlbumById(id: number): Promise<Album> {
         const found = await this.albumRepository.findOne(id);
         if (!found) {
-          throw new NotFoundException(`Task with ID "${id}" not found`);
+          throw new NotFoundException(`Album with ID "${id}" not found`);
         }
         return found;
       }
