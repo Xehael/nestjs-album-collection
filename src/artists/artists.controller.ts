@@ -24,7 +24,7 @@ export class ArtistsController {
     @Post('addArtist')
     @UsePipes(ValidationPipe)
     addArtist(@Body() createArtistDto : createArtistDto ){
-    console.log("ADD TASK")
+    console.log("ADD ARTIST")
      if(createArtistDto)
      {
       return this.artistsService.addArtist(createArtistDto);
